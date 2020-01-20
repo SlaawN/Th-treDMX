@@ -1,0 +1,9 @@
+
+
+
+
+piloter/modifier les lumières
+gestion(créer / modifier/supprimer) des équipements de lumière
+enlever enseignant 
+gerer les adresses des equi
+ajouter ou modifier les adresses
