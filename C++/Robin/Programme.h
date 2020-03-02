@@ -16,7 +16,6 @@ class Programme {
 		int id,NbScene;
 		String name;
 
-
 	public:
 		Programme();
 		void setId(int id);
