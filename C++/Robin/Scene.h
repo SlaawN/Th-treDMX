@@ -9,6 +9,7 @@
 #include <string.h>
 #include <sstream>
 #include <vcl.h>
+#include "Sequence.h"
 //---------------------------------------------------------------------------
 
 class Scene{

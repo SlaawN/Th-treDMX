@@ -9,6 +9,7 @@
 #include <string.h>
 #include <sstream>
 #include <vcl.h>
+#include "Scene.h"
 //---------------------------------------------------------------------------
 class Programme {
 
