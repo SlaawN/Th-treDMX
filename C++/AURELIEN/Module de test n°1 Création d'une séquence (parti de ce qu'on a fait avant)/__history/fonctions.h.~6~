@@ -1,0 +1,23 @@
+//---------------------------------------------------------------------------
+
+#ifndef fonctionsH
+#define fonctionsH
+class Couleurs
+{
+	private:
+		unsigned char dmxBlock[512];
+
+	public:
+		Couleurs(unsigned char dmxBlock[512]);
+		~Couleurs();
+		void Rouge();
+		void Vert();
+		void Bleu();
+		void Blanc();
+		void Stroboscope();
+};
+
+
+
+//---------------------------------------------------------------------------
+#endif
