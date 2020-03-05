@@ -1,0 +1,160 @@
+﻿//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+#include "include/DasHard.h.h"
+//#include "include/DasHard2006.dll"
+#include "Unit2.h"
+#include "Unit1.h"
+
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm1 *Form1;
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+	: TForm(Owner)
+{
+	// charge la dll
+	g_dasusbdll=LoadLibrary(L"DasHard2006.dll");
+	// recupere l'adresse du DMX
+	if(g_dasusbdll)
+	{
+		DasUsbCommand=(DASHARDCOMMAND)::GetProcAddress((HMODULE)g_dasusbdll,"DasUsbCommand");
+	}
+	// ouvre la connexion à l'interface du DMX
+	interface_open=DasUsbCommand(DHC_INIT,0,NULL);
+	DasUsbCommand(DHC_OPEN,0,0);
+	MessageBox(NULL,L"Connexion Reussie",L"Reussie",0);
+	lblResultOpenDMX->Caption=interface_open;
+	// initialise les valeurs a zero
+	for (int i = 0; i < 512; i++) {
+		dmxBlock[i]=0;
+	}
+    // passe les 6 premieres valeurs à 255
+	dmxBlock[0]=0xFF;
+	dmxBlock[1]=0xFF;
+	dmxBlock[2]=0xFF;
+	dmxBlock[3]=0xFF;
+	dmxBlock[4]=0xFF;
+	dmxBlock[5]=0xFF;
+	Couleur = new PilotageLumiere(dmxBlock);
+
+}
+//---------------------------------------------------------------------------
+ void __fastcall TForm1::SendTrame()
+ {
+	if(interface_open>0)
+	{
+
+		try{
+		   int i=1;
+			DasUsbCommand(DHC_DMXOUT,DMX_MAXCHANNEL,dmxBlock);
+		}
+		catch(int x)
+		{
+
+		}
+	}
+
+ }
+ void __fastcall TForm1::FormClose(TObject*Sender,TCloseAction&Action)
+ {
+ //FermetureduDMX�l'arretduprogramme
+	if(interface_open>0)
+	{
+		DasUsbCommand(DHC_CLOSE,0,0);
+		DasUsbCommand(DHC_EXIT,0,NULL);
+	}
+	if(g_dasusbdll!=NULL)
+	FreeLibrary(g_dasusbdll);
+ }
+//---------------------------------------------------------------------------
+void __fastcall TForm1::ScrollBarBleueChange(TObject *Sender)
+{
+   // recupere la valeur du curseur
+   // et change la partie de la trame qui gere la couleur bleue en fonction
+	Couleur->setCouleurB(ScrollBarBleue->Position+255);
+	EditBleue->Text = Couleur->getCouleurB();
+
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::ScrollBarVerteChange(TObject *Sender)
+{
+    // recupere la valeur du curseur
+	// et change la partie de la trame qui gere la couleur verte en fonction
+	Couleur->setCouleurG(ScrollBarVerte->Position+255);
+	EditVerte->Text = Couleur->getCouleurG();
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::ScrollBarWhiteChange(TObject *Sender)
+{
+    // recupere la valeur du curseur
+	// et change la partie de la trame qui gere la luminosité en fonction
+
+	Couleur->setCouleurW(ScrollBarWhite->Position+255);
+	EditWhite->Text = Couleur->getCouleurW();
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::ScrollBarRougeChange(TObject *Sender)
+{
+	// recupere la valeur du curseur
+	// et change la partie de la trame qui gere la couleur rouge en fonction
+	Couleur->setCouleurR(ScrollBarRouge->Position+255);
+	EditRouge->Text = Couleur->getCouleurR();
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Timer1Timer(TObject *Sender)
+{
+	// execute la fonction SendTrame();
+	dmxBlock[0]=Couleur->getStroboscope();
+	dmxBlock[1]=Couleur->getCouleurR();
+	dmxBlock[2]=Couleur->getCouleurG();
+	dmxBlock[3]=Couleur->getCouleurB();
+	dmxBlock[4]=Couleur->getCouleurW();
+	SendTrame();
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button2Click(TObject *Sender)
+{
+	// trame pour une deuxieme lampe
+	dmxBlock[40]=0xFF;
+	dmxBlock[41]=0xFF;
+	dmxBlock[42]=0xFF;
+	dmxBlock[43]=0xFF;
+	dmxBlock[44]=0xFF;
+	dmxBlock[45]=0xFF;
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button3Click(TObject *Sender)
+{
+	// trame pour une troisème lampe
+	dmxBlock[80]=0xFF;
+	dmxBlock[81]=0xFF;
+	dmxBlock[82]=0xFF;
+	dmxBlock[83]=0xFF;
+	dmxBlock[84]=0xFF;
+	dmxBlock[85]=0xFF;
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+
+ Memo1->Lines->Add(Couleur->getCouleurR());
+ Memo1->Lines->Add(Couleur->getCouleurG());
+ Memo1->Lines->Add(Couleur->getCouleurB());
+ Memo1->Lines->Add(Couleur->getCouleurW());
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ScrollBar1Change(TObject *Sender)
+{
+    Couleur->setStroboscope(ScrollBar1->Position+255);
+	EditStrobo->Text = Couleur->getStroboscope();
+}
+//---------------------------------------------------------------------------
+
