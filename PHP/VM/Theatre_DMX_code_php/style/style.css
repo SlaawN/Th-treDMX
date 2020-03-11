@@ -1,0 +1,241 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+  }
+  .kPrVeO {
+    width: 48%;
+    background-color: #3a3535;
+    padding:0px;
+    text-align: center;
+    max-resolution: 5px;px;
+  }
+  .hLIAGC {
+    width: 100%;
+    padding: 10px;
+  }
+  .jhZEpQ {
+    min-height: 120px;
+  }
+  .btbMnr {
+    width: 95%;
+    padding:5px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+  }
+  body {
+    background-color: #3a3a3a;
+  }
+  h1 {
+    font-size: 20px;
+  }
+  h3 {
+    font-size: 12px;
+  }
+  .btnDeleteScene {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width:30px;
+    z-index:3;
+    cursor:pointer;
+  }
+  .meter {
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+    text-align: left;
+  }
+  .meter .maskScene {
+    background-image: url(http://tspro.fr/scenemask.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    height: 120px;
+    z-index: 1;
+    width:100%;
+  }
+  .btnScene{
+    position: absolute;
+    top:25px;
+    left:200px;
+    width:70px;
+    cursor:pointer;
+  }
+  .headerLane{
+    background-color: #747070;
+    padding-top: 20px;
+  }
+  .headerLane span{
+    margin-top:20px;
+    font-size: 25px;
+    z-index:-1;
+  }
+  
+  .btnProgram{
+    width:50px;
+    z-index:4;
+    position: absolute;
+    right:10px;
+    
+  }
+  .divBtnProgram{
+    position: relative;
+    z-index:1;
+    right:0px;
+    top:-35px;
+  }
+  
+  
+  .meter div {
+    height: 118px;
+  }
+  .meter .loading {
+    z-index: 0;
+    position: absolute;
+    height: 120px;
+    top: 0px;
+    left: 0px;
+    margin: 0px;
+    padding: 0px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+  }
+  
+  .meter .infoScene {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 10px;
+    z-index: 2;
+  }
+  .infoScene h3{
+    color: #bdbbbb;
+    width: 160px;
+  }
+  .infoScene h1 {
+    color: white;
+  }
+  
+  .metter {
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, rgba(255, 255, 255, 0.3)),
+      color-stop(1, rgba(255, 255, 255, 0.3))
+    );
+    background-image: -moz-linear-gradient(
+      center bottom,
+      rgb(43, 194, 83) 37%,
+      rgb(84, 240, 84) 69%
+    );
+    -webkit-box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+  }
+  .meter .loading:after,
+  .animate .loading {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: -webkit-gradient(
+      linear,
+      0 0,
+      100% 100%,
+      color-stop(0.25, rgba(255, 255, 255, 0.2)),
+      color-stop(0.25, transparent),
+      color-stop(0.5, transparent),
+      color-stop(0.5, rgba(255, 255, 255, 0.2)),
+      color-stop(0.75, rgba(255, 255, 255, 0.2)),
+      color-stop(0.75, transparent),
+      to(transparent)
+    );
+    background-image: -moz-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.2) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.2) 75%,
+      transparent 75%,
+      transparent
+    );
+    z-index: -1;
+    -webkit-background-size: 50px 50px;
+    -moz-background-size: 50px 50px;
+    background-size: 50px 50px;
+    -webkit-animation: move 2s linear infinite;
+    -moz-animation: move 2s linear infinite;
+    -webkit-border-top-right-radius: 8px;
+    -webkit-border-bottom-right-radius: 8px;
+    -moz-border-radius-topright: 8px;
+    -moz-border-radius-bottomright: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .animate .loading:after {
+    display: none;
+  }
+  
+  @-webkit-keyframes move {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 50px 50px;
+    }
+  }
+  
+  @-moz-keyframes move {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 50px 50px;
+    }
+  }
+  
+  .orange .loading {
+    background-color: #f1a165;
+    background-image: -moz-linear-gradient(top, #f1a165, #f36d0a);
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0, #f1a165),
+      color-stop(1, #f36d0a)
+    );
+    background-image: -webkit-linear-gradient(#f1a165, #f36d0a);
+  }
+  
+  .red .loading {
+    background-color: #f0a3a3;
+    background-image: -moz-linear-gradient(top, #f0a3a3, #f42323);
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0, #f0a3a3),
+      color-stop(1, #f42323)
+    );
+    background-image: -webkit-linear-gradient(#f0a3a3, #f42323);
+  }
+  
+  .nostripes .loading .loading,
+  .nostripes > .loading:after {
+    -webkit-animation: none;
+    -moz-animation: none;
+    background-image: none;
+  }
+  
