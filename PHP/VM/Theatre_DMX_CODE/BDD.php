@@ -52,7 +52,7 @@
         {
             if(!is_null($this->_bdd))
             {
-				$request=$this->_bdd->query("SELECT username FROM `".$table."` WHERE username='$champLogin' AND password='$champMdp'");                     					
+				$request=$this->_bdd->query("SELECT username FROM `".$table."` WHERE username='$champLogin' AND Motdepasse='$champMdp'");                     					
 					
 				 if ($request->rowCount()==1)
 			 	 {
@@ -66,12 +66,12 @@
         {
             if(!is_null($this->_bdd))
             {
-				$request=$this->_bdd->query("SELECT username FROM `".$table."` WHERE username='$champLogin' AND password='$champMdp' and admin =1");                     					
+				$request=$this->_bdd->query("SELECT username FROM `".$table."` WHERE username='$champLogin' AND Motdepasse='$champMdp' and admin ='1'");                     					
 					
 				 if ($request->rowCount()==1)
 			 	 {
 				 	return true;
-			 	 }
+				  }
 			return false; 
 			}	 
         }

@@ -24,7 +24,7 @@
             $user2->Connexion_BDD("192.168.65.221","THEATRE_DMX","dmx","dmx");                        
             $_SESSION['User']=$user2->Autorisation("User",$champLogin,$champMdp);         
             $_SESSION['username']=$champLogin;
-            $_SESSION['password']=$champMDP;
+            $_SESSION['password']=$champMdp;
         }
         
         if (!isset($_SESSION['username']))
