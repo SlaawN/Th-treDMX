@@ -4,12 +4,15 @@
 #define EquipementH
 #include <map>
 #include "Property.h"
-//---------------------------------------------------------------------------
+#include <string.h>
+#include <tchar.h>
+
+
 class Equipement{
 
 	private:
-		int id,
-		char *name,
+		int id;
+		char * name;
 		std::map<String,Property*>properties;
 
 	public:
@@ -22,5 +25,5 @@ class Equipement{
 		char* GetName();
 		Equipement(int id,char* name,std::map<String,Property*>);
 
-}
+};
 #endif

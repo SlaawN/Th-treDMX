@@ -22,7 +22,7 @@ void SequenceUsed::setSequenceValue(int value){
 
 int SequenceUsed::getSequenceValue(){
 
-  return id;
+  	return id;
 
 }
 

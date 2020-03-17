@@ -7,6 +7,7 @@
 #include <tchar.h>
 #include <stdio.h>
 #include <string.h>
+#include <map>
 #include <sstream>
 #include <vcl.h>
 #include "Sequence.h"
@@ -34,9 +35,5 @@ class Scene{
 		//std::map <string sequence*> getSequences();
 
 };
-
-
-
-
-
+// scene .size
 #endif

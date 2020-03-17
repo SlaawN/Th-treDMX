@@ -5,8 +5,6 @@
 #include "Scene.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
-
-
 Scene::Scene(int id,int TpsPause,int NbSequence,String name){
 
 	this->id=id;
@@ -64,6 +62,3 @@ int Scene::getNbSeq(){
 	return NbSequence;
 
 }
-
-
-

@@ -3,18 +3,14 @@
 #ifndef MySQLH
 #define MySQLH
 //---------------------------------------------------------------------------
-
-
-class MySQL{
-
-	private:
-		MYSQL mysql;
-	public:
-		bool update();
-		bool insert();
-		bool supp();
-		bool select();
-
-}
+ class MySQL
+ {
+		MySQL();
+		bool Connexion()=0;
+		bool update(String req)=0;
+		bool insert(String req)=0;
+		bool supp(String req)=0;
+		bool select(String req)=0;
+ };
 
 #endif

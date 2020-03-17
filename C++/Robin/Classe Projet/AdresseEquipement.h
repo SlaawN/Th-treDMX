@@ -4,11 +4,13 @@
 #define AdresseEquipementH
 #include <map>
 #include "Property.h"
+#include "Equipement.h"
+
 //---------------------------------------------------------------------------
 class AdresseEquipement{
 
 	private:
-		Equipement equipement;
+		Equipement* equipement;
 		int adresse,int;
 		std::map<Property*,int>values;
 
