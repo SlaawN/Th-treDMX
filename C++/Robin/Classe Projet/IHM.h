@@ -10,6 +10,7 @@
 #include <Vcl.ExtCtrls.hpp>
 #include "Sequence.h"
 #include"include/DasHard.h.h"
+#include "MySQL.h"
 #include <sstream>
 #include <deque>
 #include <vector>
@@ -35,6 +36,8 @@ private:	// Déclarations utilisateur
 	int interface_open;
 	unsigned char dmxBlock[512];
 	Sequence * Seq;
+	int NbTrackBar;
+	MySQL *Connexion;
 
 public:		// Déclarations utilisateur
 	__fastcall TForm1(TComponent* Owner);

@@ -23,28 +23,23 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 	// ouvre la connexion à l'interface du DMX
 	interface_open=DasUsbCommand(DHC_INIT,0,NULL);
 	DasUsbCommand(DHC_OPEN,0,0);
-
 	//lblResultOpenDMX->Caption=interface_open;
 	// initialise les valeurs a zero
 	for (int i = 0; i < 512; i++) {
 		dmxBlock[i]=0;
 	}
-    // passe les 6 premieres valeurs à 255
-
-
-
-
-	int NbTrackBar=6;
+	NbTrackBar=6;
 	for(int i = 0 ; i < NbTrackBar; i++)
 	{
 		TScrollBar * ScrollB = new TScrollBar(this);
 		ScrollB->Parent = this;
 		TEditHisto * edit = new TEditHisto(this, ScrollB);
 		edit->Width=33;
+		edit->Top=10;
 		edit->Left = i * 50 + 25;
 		ScrollB->Max=255;
 		ScrollB->Left = i * 50 + 30;
-		ScrollB->Top = 50;
+		ScrollB->Top = 60;
 		ScrollB->Tag = i;
 		ScrollB->Max = 255;
 		ScrollB->Position = 255;
@@ -53,7 +48,6 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 		dmxBlock[i] = ScrollB->Position;
 		Seq = new Sequence(i,0,dmxBlock[i]);
 	}
-
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::MyTrackBarChange(TObject *Sender)
@@ -69,11 +63,14 @@ void __fastcall TForm1::MyTrackBarChange(TObject *Sender)
 }
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < NbTrackBar; i++)
 	{
 		dmxBlock[i]=Seq->getTrame(i);
 		Memo1->Lines->Add(dmxBlock[i]);
 	}
+	Connexion = new MySQL();
+	AnsiString thierry="deux";
+	Connexion->select(thierry,Memo1);
 
 }
 //---------------------------------------------------------------------------
@@ -94,7 +91,7 @@ void __fastcall TForm1::SendTrame()
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Timer1Timer(TObject *Sender)
 {
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < NbTrackBar; i++)
 	{
 		dmxBlock[i]=Seq->getTrame(i);
 	}
