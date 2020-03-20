@@ -1,9 +1,20 @@
-void setup() {
-  // put your setup code here, to run once:
+#include "EcranLcd.h"
+#include "Capteurs.h"
+
+
+void setup() 
+{
+Serial.begin(9600); //Initialisation de la communication avec la console
+
 
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void loop() 
+{
 
+}
+
+void splitString()
+{
+  
 }
