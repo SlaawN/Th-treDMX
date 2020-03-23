@@ -3,25 +3,33 @@
 #pragma hdrstop
 
 #include "MySQL.h"
+#define HOST"192.168.64.67"
+#define USER"dmx"
+#define PASSWORD"dmx"
+#define DATABASE"THEATRE_DMX"
+#include <sstream>
+
+
 //---------------------------------------------------------------------------
 
-MySQL::MySQL()
+MySQL::MySQL(TMemo* Memo)
 {
-	//this->Memo1=Memo1;
+  this->Memo1=Memo;
 }
 bool MySQL::Connexion()
 {
-	mySQL = mysql_init(NULL);
+
+//	mySQL = mysql_init(NULL);
+//	//mySQL, "192.168.64.67", "dmx", "dmx", "THEATRE_DMX"
 //	conn=mysql_real_connect(mySQL, HOST, USER, PASSWORD, DATABASE, 0, NULL, 0);
-//	std::stringstream stringbuilder;
 //	if(conn==NULL)
 //	{
 //		return false;
 //	}
 //	else
 //	{
-//	   return true;
-//	}
+	   return true;
+	//}
 
 }
 bool MySQL::update(String req)
@@ -38,9 +46,9 @@ bool MySQL::supp(String req)
 
 
 }
-bool MySQL::select(AnsiString req,TMemo* Memo)
+bool MySQL::select(AnsiString req)
 {
-		this->Memo1=Memo;
+
 //		AnsiString select = "SELECT `Nom` FROM `Course`";
 //		if (!mysql_query(mySQL, select.c_str()))
 //		{

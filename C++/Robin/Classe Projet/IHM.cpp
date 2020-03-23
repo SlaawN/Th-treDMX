@@ -48,6 +48,13 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 		dmxBlock[i] = ScrollB->Position;
 		Seq = new Sequence(i,0,dmxBlock[i]);
 	}
+	Connexion = new MySQL(Memo1);
+
+	if (Connexion->Connexion()==true) {
+		MessageBox(NULL,"Reussi","Connexion à BDD",0);
+	}else{
+		MessageBox(NULL,"Echec","Connexion à BDD",0);
+    }
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::MyTrackBarChange(TObject *Sender)
@@ -61,6 +68,7 @@ void __fastcall TForm1::MyTrackBarChange(TObject *Sender)
 	Label1->Caption = str;
 	Seq->setTrame(255-obj->Position, obj->Tag);
 }
+//---------------------------------------------------------------------------
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
 	for (int i = 0; i < NbTrackBar; i++)
@@ -68,9 +76,9 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
 		dmxBlock[i]=Seq->getTrame(i);
 		Memo1->Lines->Add(dmxBlock[i]);
 	}
-	Connexion = new MySQL();
+
 	AnsiString thierry="deux";
-	Connexion->select(thierry,Memo1);
+	Connexion->select(thierry);
 
 }
 //---------------------------------------------------------------------------
@@ -98,4 +106,32 @@ void __fastcall TForm1::Timer1Timer(TObject *Sender)
 	SendTrame();
 }
 //---------------------------------------------------------------------------
+void __fastcall TForm1::Creation1Click(TObject *Sender)
+{
+	NbTrackBar=6;
+	for(int i = 0 ; i < NbTrackBar; i++)
+	{
+
+		TScrollBar * ScrollB = new TScrollBar(this);
+		ScrollB->Parent = this;
+		TEditHisto * edit = new TEditHisto(this, ScrollB);
+		edit->Width=33;
+		edit->Top=20;
+		edit->Left = i * 50 + 25;
+		ScrollB->Max=255;
+		ScrollB->Left = i * 50 + 30;
+		ScrollB->Top = 80;
+		ScrollB->Tag = i;
+		ScrollB->Max = 255;
+		ScrollB->Position = 255;
+		ScrollB->Kind=sbVertical;
+		ScrollB->OnChange = MyTrackBarChange;
+		dmxBlock[i] = ScrollB->Position;
+		Seq = new Sequence(i,0,dmxBlock[i]);
+	}
+
+}
+//---------------------------------------------------------------------------
+
+
 

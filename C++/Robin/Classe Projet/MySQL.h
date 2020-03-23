@@ -20,12 +20,12 @@
 			TMemo* Memo1;
 
 		public:
-			MySQL();
+			MySQL(TMemo* Memo);
 			bool Connexion();
 			bool update(String req);
 			bool insert(String req);
 			bool supp(String req);
-			bool select(AnsiString req,TMemo*);
+			bool select(AnsiString req);
  };
 
 #endif
