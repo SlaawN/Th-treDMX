@@ -2,23 +2,25 @@
 #include "Arduino.h"
 
 // methode permettant de relever les valeurs des potentiomètres
-int Capteurs::LireValeur(int A1,int A2,int A3,int A4,int A5,int A6,int A7,int A8)
+int Capteurs::LireValeur(int*tab)
 {
-  
-            int ValPot1=analogRead(A1);
-            int ValPot2=analogRead(A2);
-            int ValPot3=analogRead(A3);
-            int ValPot4=analogRead(A4);
-            int ValPot5=analogRead(A5);
-            int ValPot6=analogRead(A6);
-            int ValPot7=analogRead(A7);
-            int ValPot8=analogRead(A8);
-            
-
+  for (int i = 0; i < 8; i++) 
+      {
+        this->Analog[i]=analogRead(tab[i]);
+        
+      }
 }
 
-int Capteurs::SendValToSerialPort();
-
+int Capteurs::SendValToSerial()
+{
+  for (int i = 0; i < 8; i++)
+  {
+    Serial.print("Case du tableau");
+    Serial.print(i);
+    Serial.println(this->Analog[i]);
+    delay(1000);
+  }
+}
     
 
 // methode permettant d'utiliser le multiplexeur analogique
