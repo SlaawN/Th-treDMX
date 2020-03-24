@@ -222,8 +222,8 @@ void __fastcall TForm1::BoutonCreaSequenceClick(TObject *Sender)
 	}
 	// si la connexion à la BDD c'est bien passée
 	// envoie des coordonnées dans la BDD
-	else
-	{
+
+	else{
 		InsertSequence << "INSERT INTO `Sequence` ( `duree`,`NB_Parametre`,`Parametre1`,`Parametre2`,`Parametre3`,`Parametre4`,`Parametre5`) VALUES ( " << Duree << ","<< NbParametre << ","<< Parametre1 << ","<< Parametre2 << ","<< Parametre3 << ","<< Parametre4 << ","<< Parametre5 <<")"; //Parametre 6 enlevé
 		mysql_query(mySQL, InsertSequence.str().c_str());
 
