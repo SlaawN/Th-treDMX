@@ -2,15 +2,30 @@
 
 #ifndef MySQLH
 #define MySQLH
+#include <string>
+#include "includeSQL/mysql.h"
+#include <vcl.h>
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
 //---------------------------------------------------------------------------
  class MySQL
  {
-		MySQL();
-		bool Connexion()=0;
-		bool update(String req)=0;
-		bool insert(String req)=0;
-		bool supp(String req)=0;
-		bool select(String req)=0;
+		private:
+			MYSQL * mySQL;
+			MYSQL *conn;
+			MYSQL_RES *myRES;
+			MYSQL_ROW myROW;
+			TMemo* Memo1;
+
+		public:
+			MySQL(TMemo* Memo);
+			bool Connexion();
+			bool update(String req);
+			bool insert(String req);
+			bool supp(String req);
+			bool select(AnsiString req);
  };
 
 #endif
