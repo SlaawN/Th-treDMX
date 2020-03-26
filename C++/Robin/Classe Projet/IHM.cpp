@@ -13,7 +13,6 @@ TForm1 *Form1;
 DWORD WINAPI TForm1::RecvThread(LPVOID params)
 {
 	TForm1 * form = (TForm1*)params;
-
 	while(1)
 	{
 		WaitForSingleObject(form->sync, INFINITE);
@@ -73,7 +72,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 	for (int i = 0; i < 512; i++) {
 		dmxBlock[i]=0;
 	}
-	ConnexionBDD = new MySQL(Memo1);
+	ConnexionBDD = new MySQL(MemoClasse);
 
 	if (ConnexionBDD->Connexion()==true) {
 		sync = CreateMutex(NULL, FALSE, NULL);
@@ -85,6 +84,12 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 		//MessageBox(NULL,"Echec","Connexion à BDD",0);
 	}
 	CloseServ->Visible=false;
+	EditCreaSeq->Visible=false;
+	LabelCreaSeq->Visible=false;
+	ButtonClasse->Visible=false;
+	MemoClasse->Visible=false;
+	ListBoxSeq->Visible=false;
+    LabelSeq->Visible=false;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::MyTrackBarChange(TObject *Sender)
@@ -99,17 +104,18 @@ void __fastcall TForm1::MyTrackBarChange(TObject *Sender)
 	Seq->setTrame(255-obj->Position, obj->Tag);
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm1::Button1Click(TObject *Sender)
+void __fastcall TForm1::ButtonClasseClick(TObject *Sender)
 {
 	for (int i = 0; i < NbTrackBar; i++)
 	{
 		dmxBlock[i]=Seq->getTrame(i);
-		Memo1->Lines->Add(dmxBlock[i]);
+		UnicodeString AjoutMemo="Paramètre ";
+		AjoutMemo+=i+1;
+		AjoutMemo+=" :";
+		AjoutMemo+=dmxBlock[i];
+		MemoClasse->Lines->Add(AjoutMemo);
 	}
-
-	AnsiString thierry="deux";
-	ConnexionBDD->select(thierry, &ResultSelect);
-
+	ConnexionBDD->insert("INSERT INTO `Sequence` (`NbParametre`) VALUES (`NbTrackBar`)");
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::SendTrame()
@@ -124,7 +130,6 @@ void __fastcall TForm1::SendTrame()
 		{
 		}
 	}
-
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Timer1Timer(TObject *Sender)
@@ -138,36 +143,25 @@ void __fastcall TForm1::Timer1Timer(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Creation1Click(TObject *Sender)
 {
-	bool SelectBDD=ConnexionBDD->select("SELECT `Nom` FROM `Course`",&ResultSelect);
-
-	for(int i = 0 ; i < ResultSelect.front(); i++)
-	{
-		ScrollB[i] = new TScrollBar(this);
-		ScrollB[i]->Parent = this;
-		ScrollB[i]->Max=255;
-		ScrollB[i]->Left = i * 50 + 30;
-		ScrollB[i]->Top = 80;
-		ScrollB[i]->Tag = i;
-		ScrollB[i]->Max = 255;
-		ScrollB[i]->Position = 255;
-		ScrollB[i]->Kind=sbVertical;
-		ScrollB[i]->OnChange = MyTrackBarChange;
-		edit[i] = new TEditHisto(this, ScrollB[i]);
-		edit[i]->Width=33;
-		edit[i]->Top=20;
-		edit[i]->Left = i * 50 + 25;
-		dmxBlock[i] = ScrollB[i]->Position;
-		Seq = new Sequence(i,0,dmxBlock[i]);
-	}
+	EditCreaSeq->Visible=true;
+	LabelCreaSeq->Visible=true;
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Modification1Click(TObject *Sender)
 {
-    Label1->Visible=False;
+	ListBoxSeq->Visible=true;
+	LabelSeq->Visible=true;
+	ButtonClasse->Visible=false;
+	MemoClasse->Visible=false;
+	Label1->Visible=False;
 	for(int i = 0 ; i < NbTrackBar; i++)
 	{
 		ScrollB[i]->Free();
 		edit[i]->Free();
+	}
+	ConnexionBDD->select("SELECT * FROM `Sequence`",&ResultSelect);
+	for (int i = 0; i < ResultSelect.size(); i++) {
+		 ListBoxSeq->Items->Add(ResultSelect[i]);
 	}
 }
 //---------------------------------------------------------------------------
@@ -192,7 +186,7 @@ void __fastcall TForm1::ServeurDMXConnect(TIdContext *AContext)
 }
 //---------------------------------------------------------------------------
  void __fastcall TForm1::FormClose(TObject*Sender,TCloseAction&Action)
- {
+{
 	//FermetureduDMX�l'arretduprogramme
 	if(interface_open>0)
 	{
@@ -201,7 +195,7 @@ void __fastcall TForm1::ServeurDMXConnect(TIdContext *AContext)
 	}
 	if(g_dasusbdll!=NULL)
 	FreeLibrary(g_dasusbdll);
- }
+}
 void __fastcall TForm1::TimerPortSerieTimer(TObject *Sender)
 {
 	WaitForSingleObject(sync, INFINITE);
@@ -225,6 +219,48 @@ void __fastcall TForm1::CloseServClick(TObject *Sender)
 {
 	ServeurDMX->Active=false;
 	Panel1->Color=clRed;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::EditCreaSeqKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
+
+{
+	if (Key==VK_RETURN) {
+		EditCreaSeq->Visible=false;
+		LabelCreaSeq->Visible=false;
+		ButtonClasse->Visible=true;
+		MemoClasse->Visible=true;
+		NbTrackBar=EditCreaSeq->Text.ToInt();
+		if (NbTrackBar>=8) {
+		   NbTrackBar=8;
+		}
+		for(int i = 0 ; i < NbTrackBar; i++)
+		{
+			ScrollB[i] = new TScrollBar(this);
+			ScrollB[i]->Parent = this;
+			ScrollB[i]->Max=255;
+			ScrollB[i]->Left = i * 50 + 30;
+			ScrollB[i]->Top = 80;
+			ScrollB[i]->Tag = i;
+			ScrollB[i]->Max = 255;
+			ScrollB[i]->Position = 255;
+			ScrollB[i]->Kind=sbVertical;
+			ScrollB[i]->OnChange = MyTrackBarChange;
+			edit[i] = new TEditHisto(this, ScrollB[i]);
+			edit[i]->Width=33;
+			edit[i]->Top=20;
+			edit[i]->Left = i * 50 + 25;
+			dmxBlock[i] = ScrollB[i]->Position;
+			Seq = new Sequence(i,0,dmxBlock[i]);
+		}
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Supression1Click(TObject *Sender)
+{
+	ButtonClasse->Visible=false;
+	MemoClasse->Visible=false;
 }
 //---------------------------------------------------------------------------
 

@@ -31,8 +31,8 @@ class TForm1 : public TForm
 __published:	// Composants gérés par l'EDI
 	//void __fastcall MonEditKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
 	TLabel *Label1;
-	TMemo *Memo1;
-	TButton *Button1;
+	TMemo *MemoClasse;
+	TButton *ButtonClasse;
 	TTimer *Timer1;
 	TMainMenu *MainMenu1;
 	TMenuItem *Sequence1;
@@ -53,9 +53,13 @@ __published:	// Composants gérés par l'EDI
 	TPanel *Panel1;
 	TButton *CloseServ;
 	TTimer *TimerPortSerie;
+	TEdit *EditCreaSeq;
+	TLabel *LabelCreaSeq;
+	TListBox *ListBoxSeq;
+	TLabel *LabelSeq;
 	void __fastcall FormClose(TObject*Sender,TCloseAction&Action);
 	void __fastcall MyTrackBarChange(TObject *Sender);
-	void __fastcall Button1Click(TObject *Sender);
+	void __fastcall ButtonClasseClick(TObject *Sender);
 	void __fastcall Timer1Timer(TObject *Sender);
 	void __fastcall Creation1Click(TObject *Sender);
 	void __fastcall Modification1Click(TObject *Sender);
@@ -64,6 +68,9 @@ __published:	// Composants gérés par l'EDI
 	void __fastcall ServeurDMXConnect(TIdContext *AContext);
 	void __fastcall TimerPortSerieTimer(TObject *Sender);
 	void __fastcall CloseServClick(TObject *Sender);
+	void __fastcall EditCreaSeqKeyDown(TObject *Sender, WORD &Key, TShiftState Shift);
+	void __fastcall Supression1Click(TObject *Sender);
+
 private:	// Déclarations utilisateur
 	HINSTANCE g_dasusbdll;
 	typedef int(*DASHARDCOMMAND)(int,int,unsigned char*);

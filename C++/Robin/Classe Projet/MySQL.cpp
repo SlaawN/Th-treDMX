@@ -114,7 +114,7 @@ bool MySQL::select(AnsiString req,vector<String> *ResultSelect)
 //					myROW = mysql_fetch_row(myRES);
 //					for(unsigned int j = 0; j < mysql_num_fields(myRES); j++)
 //					{
-
+                        c_resultat.push_back("5");
 						//c_resultat.push_back(myROW[j]);
 						//AnsiString aStr = myROW[j];
 						//this->Memo1->Lines->Add(req);
