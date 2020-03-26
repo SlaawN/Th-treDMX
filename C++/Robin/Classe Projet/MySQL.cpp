@@ -1,4 +1,4 @@
-//---------------------------------------------------------------------------
+﻿//---------------------------------------------------------------------------
 
 #pragma hdrstop
 
@@ -34,23 +34,77 @@ bool MySQL::Connexion()
 }
 bool MySQL::update(String req)
 {
-
-
+	//myErrorCode = mysql_errno(MyS);
+//	if(myErrorCode == 0)
+//	{
+//		// Allocation espace m�moire
+//		char requete=new char[req.Length()+1];
+//		// Conversion de String en char
+//		wcstombs(requete,req.c_str(),req.Length()+1);
+//		// Envoie de la requ�te
+//		if(!mysql_query(mySQL,requete)){
+//			Etat = true;
+//		}else{
+//			Etat = false;
+//		}
+//	}else{
+//		//Renvoie l'erreur
+//		myErrorMsg = mysql_error(MyS);
+//		*MSG_Error = myErrorMsg;
+//		Etat = false;
+//	}
+//	return Etat;
 }
 bool MySQL::insert(String req)
 {
-
+	//myErrorCode = mysql_errno(MyS);
+//	if(myErrorCode == 0)
+//	{
+//		// Allocation espace m�moire
+//		char requete=new char[req.Length()+1];
+//		// Conversion de String en char
+//		wcstombs(requete,req.c_str(),req.Length()+1);
+//		// Envoie de la requ�te
+//		if(!mysql_query(mySQL,requete)){
+//			Etat = true;
+//		}else{
+//			Etat = false;
+//		}
+//	}else{
+//		//Renvoie l'erreur
+//		myErrorMsg = mysql_error(MyS);
+//		*MSG_Error = myErrorMsg;
+//		Etat = false;
+//	}
+//	return Etat;
 }
 bool MySQL::supp(String req)
 {
-
-
+	//myErrorCode = mysql_errno(MyS);
+//	if(myErrorCode == 0)
+//	{
+//		// Allocation espace m�moire
+//		char requete=new char[req.Length()+1];
+//		// Conversion de String en char
+//		wcstombs(requete,req.c_str(),req.Length()+1);
+//		// Envoie de la requ�te
+//		if(!mysql_query(mySQL,requete)){
+//			Etat = true;
+//		}else{
+//			Etat = false;
+//		}
+//	}else{
+//		//Renvoie l'erreur
+//		myErrorMsg = mysql_error(MyS);
+//		*MSG_Error = myErrorMsg;
+//		Etat = false;
+//	}
+//	return Etat;
 }
-bool MySQL::select(AnsiString req)
+bool MySQL::select(AnsiString req,vector<String> *ResultSelect)
 {
-
-//		AnsiString select = "SELECT `Nom` FROM `Course`";
-//		if (!mysql_query(mySQL, select.c_str()))
+	vector<String> c_resultat;
+//		if (!mysql_query(mySQL, req.c_str()))
 //		{
 //			myRES = mysql_store_result(mySQL);
 //			if (myRES)
@@ -60,13 +114,17 @@ bool MySQL::select(AnsiString req)
 //					myROW = mysql_fetch_row(myRES);
 //					for(unsigned int j = 0; j < mysql_num_fields(myRES); j++)
 //					{
-//						AnsiString aStr = myROW[j];
-						this->Memo1->Lines->Add("2");
+
+						//c_resultat.push_back(myROW[j]);
+						//AnsiString aStr = myROW[j];
+						//this->Memo1->Lines->Add(req);
 //					}
 //				}
 //				mysql_free_result(myRES);
 //			}
 //		}
+	   *ResultSelect = c_resultat;
+	   return true;
 }
 
 #pragma package(smart_init)
