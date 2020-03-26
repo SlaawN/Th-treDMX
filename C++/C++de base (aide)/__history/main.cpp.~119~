@@ -60,7 +60,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 		dmxBlock[5]=0xFF;
 
 	}
-    dmx = new Couleurs(dmxBlock);
+	dmx = new Couleurs(dmxBlock);  //instanciation d'un nouvel attribut de classe
 }
 
 //---------------------------------------------------------------------------
@@ -70,7 +70,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 	{
 		try
 		{
-			DasUsbCommand(DHC_DMXOUT,DMX_MAXCHANNEL,dmxBlock);
+			DasUsbCommand(DHC_DMXOUT,DMX_MAXCHANNEL,dmxBlock);  //methode d'envoi de trames
 		}
 		catch(int x)
 		{
@@ -94,52 +94,52 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Timer1Timer(TObject *Sender)
 {
-	SendTrame();
+	SendTrame();//on envoi en continu les trames dmxBlock[]
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::BleuClick(TObject *Sender)
 {
-    dmx->Bleu();
+	dmx->Bleu();//appel fonction bleu
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::BlancClick(TObject *Sender)
 {
-	dmx->Blanc();
+	dmx->Blanc(); //appel fonction blanc
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::RougeClick(TObject *Sender)
 {
-	dmx->Rouge();
+	dmx->Rouge();//appel fonction rouge
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::ONClick(TObject *Sender)
 {
-    dmx->ON();
+	dmx->ON();//appel fonction Allumage
 	Connect->Color = clLime;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::OFFClick(TObject *Sender)
 {
-    dmx->OFF();
+	dmx->OFF();//appel fonction Fermeture
 	Connect->Color = clRed;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::StroboscopeClick(TObject *Sender)
 {
-	dmx->Stroboscope();
+	dmx->Stroboscope();//appel fonction Stroboscope
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::DMXServerConnect(TIdContext *AContext)
 {
-	LMessage->Items->Add(AContext->Binding->PeerPort);
-	LMessage->Items->Add("IP client :" + AContext->Binding->PeerIP);
+	//LMessage->Items->Add(AContext->Binding->PeerPort);   //affichage du port
+	LMessage->Items->Add("IP client :" + AContext->Binding->PeerIP);  //affichage de l'ip client
 }
 //---------------------------------------------------------------------------
 
@@ -163,35 +163,35 @@ void __fastcall TForm1::DMXServerExecute(TIdContext *AContext)
 	AContext->Connection->Disconnect();
 
 
-	if (text == "49"){
+	if (text == "49"){//49 en ascii equivaut à 1 decimal
 		dmx->Rouge();
 		LMessage->Items->Add("Rouge");
 	}
-	if (text == "50"){
+	if (text == "50"){//50 en ascii equivaut à 2 decimal
 		dmx->Vert();
 		LMessage->Items->Add("Vert");
 	}
-	if (text == "51"){
+	if (text == "51"){ //51 en ascii equivaut à 3 decimal
 		dmx->Bleu();
 		LMessage->Items->Add("Bleu");
 	}
-	if (text == "52"){
+	if (text == "52"){  //52 en ascii equivaut à 4 decimal
 		dmx->Blanc();
 		LMessage->Items->Add("Blanc");
 	}
-	if (text == "53"){
+	if (text == "53"){//53 en ascii equivaut à 5 decimal
 		dmx->Stroboscope();
 		LMessage->Items->Add("Stroboscope");
 	}
-	if (text == "54"){
+	if (text == "54"){ //54 en ascii equivaut à 6 decimal
 		dmx->ON();
 		LMessage->Items->Add("ON");
 	}
-	if (text == "55"){
+	if (text == "55"){ //55 en ascii equivaut à 7 decimal
 		dmx->OFF();
 		LMessage->Items->Add("OFF");
 	}
-	if (text == "56") {
+	if (text == "56") {//56 en ascii equivaut à 8 decimal
 		dmx->Jaune();
         LMessage->Items->Add("Jaune");
 	}
@@ -215,7 +215,16 @@ void __fastcall TForm1::ServerOFFClick(TObject *Sender)
 
 void __fastcall TForm1::VertClick(TObject *Sender)
 {
-    dmx->Vert();
+    dmx->Vert(); //appel fonction Vert
+}
+//---------------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Sequence1Click(TObject *Sender)
+{
+	dmx->Sequence1(); //appel fonction sequence 1 ( REVUE 1 : Module de test Sequence de lumière)
 }
 //---------------------------------------------------------------------------
 
