@@ -18,23 +18,23 @@
 #include <string>
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
+
 // initialisation
-PortSerie::PortSerie()
+PortSerie::PortSerie()   //Constructeur
 {
 	ignoreData = true;
 }
 //------------------------------------------------------------------------------------//
-PortSerie::~PortSerie()
+
+PortSerie::~PortSerie()  //destructeur
 {
 }
 
 //------------------------------------------------------------------------------------//
-void PortSerie::fermerport()
+void PortSerie::fermerport()   //Methode pour fermer le port
 {
-	CloseHandle(hCom);
+	CloseHandle(hCom); // fermeture du port série
 }
-
-//------------------------------------------------------------------------------------//
 
 //------------------------------------------------------------------------------------//
 // connexion au port COM1
@@ -42,48 +42,45 @@ int PortSerie::ouvrirport()
 {
 	DCB dcb;
 	BOOL fSuccess;
-	//TCHAR *pcCommPort = TEXT("COM6"); //  Most systems have a COM1 port
+	// pcComPort : Port com correspondant
 	char * pcCommPort = "COM6";
 
-   //Open a handle to the specified com port.
-   hCom = CreateFile( pcCommPort,
-					  GENERIC_READ | GENERIC_WRITE,
-					  0,      //  must be opened with exclusive-access
-					  NULL,   //  default security attributes
-					  OPEN_EXISTING, //  must use OPEN_EXISTING
-					  0,      //  not overlapped I/O
-					  NULL ); //  hTemplate must be NULL for comm devices
+
+   hCom = CreateFile( pcCommPort,   //nom du port
+					  GENERIC_READ | GENERIC_WRITE,  //lecture et ecriture
+					  0,      // pas de partage
+					  NULL,   //  Aucune sécurité
+					  OPEN_EXISTING, // ouvre le port existant uniquement
+					  0,      //  E/S non superposé
+					  NULL ); //  Null pour les periphérique de communnication
 
    if (hCom == INVALID_HANDLE_VALUE)
    {
-	   //  Handle the error.
-	   //printf ("CreateFile failed with error %d.", GetLastError());
+
 	   return (1);
    }
 
-   //  Initialize the DCB structure.
+   //  Structure DCB (permet de controler :débit de bauds, nb de bit de démarrage/d'arrêt, format de données)
    SecureZeroMemory(&dcb, sizeof(DCB));
    dcb.DCBlength = sizeof(DCB);
 
-   //  Build on the current configuration by first retrieving all current
-   //  settings.
+   // recupération des paramètres actuels du port
    fSuccess = GetCommState(hCom, &dcb);
 
    if (!fSuccess)
    {
-      //  Handle the error.
+
 	  printf ("GetCommState failed with error %d.", GetLastError());
-      return (2);
+	  return (2);
    }
 
-   //  Fill in some DCB values and set the com state:
-   //  57,600 bps, 8 data bits, no parity, and 1 stop bit.
-   dcb.BaudRate = CBR_9600;     //  baud rate
-   dcb.ByteSize = 8;             //  data size, xmit and rcv
-   dcb.Parity   = NOPARITY;      //  parity bit
+   // On définit les valeurs (debit de bauds, taille des octets, nb de bits de démarage et d'arrêt)
+   dcb.BaudRate = CBR_9600;     //  baudRate = 9600
+   dcb.ByteSize = 8;             //  ByteSize
+   dcb.Parity   = NOPARITY;      //  Parité = aucune
    dcb.StopBits = ONESTOPBIT;    //  stop bit
 
-   fSuccess = SetCommState(hCom, &dcb);
+   fSuccess = SetCommState(hCom, &dcb); // configuration du port série selon la structure DCB
 
    if (!fSuccess)
    {
@@ -104,14 +101,20 @@ int PortSerie::ouvrirport()
 
    _tprintf (TEXT("Serial port %s successfully reconfigured."), pcCommPort);
    return (0);
+
 }
+
+
 //------------------------------------------------------------------------------------//
-//récuperer une donnée de la trame
+
+
+//Lecture du port série
+
 void PortSerie::lireport()
 {
 	Vcontinue = false;
 	isRead = false;
-    do
+	do
 	{
 		isRead = ReadFile(hCom, &recvChar, 1, &read, NULL);
 
@@ -139,5 +142,24 @@ void PortSerie::lireport()
 std::deque<char> & PortSerie::getRecvBuf()
 {
 	return recvBuf;
+}
+
+//-------------------------------------------------------------------------------------//
+
+//Ecriture sur le port Serie
+
+void PortSerie::EcrirePort()
+{
+
+char lpBuffer [] = "A";
+DWORD dNoOFBytestoWrite ; // Nombre d'octets à écrire dans le port
+DWORD dNoOfBytesWritten = 0; // Nombre d'octets écrits sur le port
+dNoOFBytestoWrite = sizeof ( lpBuffer ) ;
+
+bool Resultat = WriteFile ( hCom ,
+lpBuffer, // Données à écrire sur le port
+dNoOFBytestoWrite , // Nombre d'octets à écrire
+& dNoOfBytesWritten , // Octets écrits
+NULL ) ;
 }
 
