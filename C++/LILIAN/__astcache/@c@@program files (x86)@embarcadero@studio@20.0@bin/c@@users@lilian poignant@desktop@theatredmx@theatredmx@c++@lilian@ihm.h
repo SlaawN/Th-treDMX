@@ -10,13 +10,17 @@
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
 {
-__published:	// Composants gérés par l'EDI
+__published:	// Composants gÃ©rÃ©s par l'EDI
 	TButton *BoutonOuverturePort;
 	TButton *BoutonFermeturePort;
 	TButton *BoutonLecturePort;
 	TButton *BoutonEcriturePort;
-private:	// Déclarations utilisateur
-public:		// Déclarations utilisateur
+	void __fastcall BoutonOuverturePortClick(TObject *Sender);
+	void __fastcall BoutonFermeturePortClick(TObject *Sender);
+	void __fastcall BoutonLecturePortClick(TObject *Sender);
+	void __fastcall BoutonEcriturePortClick(TObject *Sender);
+private:	// DÃ©clarations utilisateur
+public:		// DÃ©clarations utilisateur
 	__fastcall TForm1(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
