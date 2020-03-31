@@ -33,7 +33,7 @@ __published:	// Composants gérés par l'EDI
 	TLabel *Label1;
 	TMemo *MemoClasse;
 	TButton *ButtonClasse;
-	TTimer *Timer1;
+	TTimer *TimerSendTrame;
 	TMainMenu *MainMenu1;
 	TMenuItem *Sequence1;
 	TMenuItem *Creation1;
@@ -60,7 +60,7 @@ __published:	// Composants gérés par l'EDI
 	void __fastcall FormClose(TObject*Sender,TCloseAction&Action);
 	void __fastcall MyTrackBarChange(TObject *Sender);
 	void __fastcall ButtonClasseClick(TObject *Sender);
-	void __fastcall Timer1Timer(TObject *Sender);
+	void __fastcall TimerSendTrameTimer(TObject *Sender);
 	void __fastcall Creation1Click(TObject *Sender);
 	void __fastcall Modification1Click(TObject *Sender);
 	void __fastcall ActiveServClick(TObject *Sender);
