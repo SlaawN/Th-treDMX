@@ -92,11 +92,13 @@ __fastcall TForm1::TForm1(TComponent* Owner)
     LabelSeq->Visible=false;
 }
 //---------------------------------------------------------------------------
+// Quand une des ScrollBars bouge
 void __fastcall TForm1::MyTrackBarChange(TObject *Sender)
 {
+	// envoie la position des scrollBars dans la variable de classe.
 	UnicodeString str = "Bar appelante ";
 	TScrollBar * obj = (TScrollBar*) Sender;
-	str += obj->Tag;
+	str += obj->Tag+1;
 	str += " valeur ";
 	int Position =255-obj->Position;
 	str += Position;
@@ -132,13 +134,16 @@ void __fastcall TForm1::SendTrame()
 	}
 }
 //---------------------------------------------------------------------------
-void __fastcall TForm1::Timer1Timer(TObject *Sender)
+void __fastcall TForm1::TimerSendTrameTimer(TObject *Sender)
 {
+	//NbTrackbar equivaut au nombre de channel du dmx
 	for (int i = 0; i < NbTrackBar; i++)
 	{
+		// recupere les données de la classe pour les mettre dans la trame
 		dmxBlock[i]=Seq->getTrame(i);
 	}
-	//SendTrame();
+    // appel la fonction d'envoie de la trame au boitier
+	SendTrame();
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Creation1Click(TObject *Sender)
@@ -149,6 +154,8 @@ void __fastcall TForm1::Creation1Click(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Modification1Click(TObject *Sender)
 {
+	EditCreaSeq->Visible=false;
+	LabelCreaSeq->Visible=false;
 	ListBoxSeq->Visible=true;
 	LabelSeq->Visible=true;
 	ButtonClasse->Visible=false;
@@ -175,13 +182,16 @@ void __fastcall TForm1::ActiveServClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::ServeurDMXExecute(TIdContext *AContext)
 {
+	// Recupere les données que m'envoie le client connecté
 	TrameSocket = AContext->Connection->IOHandler->ReadByte();
+	// deconnecte le client
 	AContext->Connection->Disconnect();
 	Memo2->Lines->Add(TrameSocket);
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::ServeurDMXConnect(TIdContext *AContext)
 {
+	// Affiche l'adresse IP du client qui vient de se connecté
 	Memo2->Lines->Add("IP client :" + AContext->Binding->PeerIP);  //affichage de l'ip client
 }
 //---------------------------------------------------------------------------
