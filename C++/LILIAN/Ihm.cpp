@@ -8,9 +8,6 @@
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
-
-
-
 TForm1 *Form1;
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
@@ -24,34 +21,27 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 
 
 
-
-
 void __fastcall TForm1::BoutonOuverturePortClick(TObject *Sender)
 {
-
-Port->ouvrirport();
+	Port->ouvrirport();
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::BoutonFermeturePortClick(TObject *Sender)
 {
-
-Port->fermerport();
+    Port->fermerport();
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::BoutonLecturePortClick(TObject *Sender)
 {
-
-Port->lireport();
+    Port->lireport();
 }
 //---------------------------------------------------------------------------
 
-
 void __fastcall TForm1::BoutonEcriturePortClick(TObject *Sender)
 {
-
-Port->EcrirePort();
+ 	Port->EcrirePort();
 }
 //---------------------------------------------------------------------------
 

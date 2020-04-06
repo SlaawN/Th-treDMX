@@ -20,7 +20,9 @@ __published:	// Composants gérés par l'EDI
 	void __fastcall BoutonFermeturePortClick(TObject *Sender);
 	void __fastcall BoutonLecturePortClick(TObject *Sender);
 	void __fastcall BoutonEcriturePortClick(TObject *Sender);
+
 private:
+
 PortSerie * Port;
 
 public:		// Déclarations utilisateur

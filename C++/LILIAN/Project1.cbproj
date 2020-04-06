@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{BCB4798C-5ECC-4AAB-9596-5AC5D4968325}</ProjectGuid>
+        <ProjectGuid>{F37C197A-B250-4D29-B62F-166480A5ED78}</ProjectGuid>
         <ProjectVersion>18.7</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
         <AppType>Application</AppType>
@@ -69,8 +69,8 @@
         <Icon_MainIcon>$(BDS)\bin\cbuilder_PROJECTICON.ico</Icon_MainIcon>
         <UWP_CppLogo44>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_44.png</UWP_CppLogo44>
         <UWP_CppLogo150>$(BDS)\bin\Artwork\Windows\UWP\cppreg_UwpDefault_150.png</UWP_CppLogo150>
-        <IncludePath>..\..\..\Desktop\TheatreDMX\TheatreDMX\C++\LILIAN\;..\..\..\..\Desktop\TheatreDMX\TheatreDMX\C++\LILIAN\;$(IncludePath)</IncludePath>
-        <ILINK_LibraryPath>..\..\..\Desktop\TheatreDMX\TheatreDMX\C++\LILIAN\;..\..\..\..\Desktop\TheatreDMX\TheatreDMX\C++\LILIAN\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <IncludePath>..\..\..\..\Desktop\TheatreDMX\TheatreDMX\C++\LILIAN\;$(IncludePath)</IncludePath>
+        <ILINK_LibraryPath>..\..\..\..\Desktop\TheatreDMX\TheatreDMX\C++\LILIAN\;$(ILINK_LibraryPath)</ILINK_LibraryPath>
         <SanitizedProjectName>Project1</SanitizedProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
@@ -134,12 +134,6 @@
         <BCC_PCHName_Clang>Project1PCH1.h</BCC_PCHName_Clang>
     </PropertyGroup>
     <ItemGroup>
-        <CppCompile Include="..\..\..\Desktop\TheatreDMX\TheatreDMX\C++\LILIAN\Ihm.cpp">
-            <Form>Form1</Form>
-            <FormType>dfm</FormType>
-            <DependentOn>..\..\..\Desktop\TheatreDMX\TheatreDMX\C++\LILIAN\Ihm.h</DependentOn>
-            <BuildOrder>2</BuildOrder>
-        </CppCompile>
         <CppCompile Include="ConsoleMateriel.cpp">
             <DependentOn>ConsoleMateriel.h</DependentOn>
             <BuildOrder>8</BuildOrder>
@@ -151,6 +145,12 @@
         <CppCompile Include="ConsoleMaterielProtocolEventListener.cpp">
             <DependentOn>ConsoleMaterielProtocolEventListener.h</DependentOn>
             <BuildOrder>7</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="Ihm.cpp">
+            <Form>Form1</Form>
+            <FormType>dfm</FormType>
+            <DependentOn>Ihm.h</DependentOn>
+            <BuildOrder>2</BuildOrder>
         </CppCompile>
         <CppCompile Include="LineParser.cpp">
             <DependentOn>LineParser.h</DependentOn>
@@ -175,7 +175,7 @@
             <BuildOrder>1</BuildOrder>
             <PCH>true</PCH>
         </PCHCompile>
-        <FormResources Include="..\..\..\Desktop\TheatreDMX\TheatreDMX\C++\LILIAN\Ihm.dfm"/>
+        <FormResources Include="Ihm.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

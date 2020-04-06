@@ -13,10 +13,9 @@ TForm1 *Form1;
 __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner)
 {
+	Port = new PortSerie();
 }
 //---------------------------------------------------------------------------
-
-
 
 
 
@@ -24,30 +23,25 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 
 void __fastcall TForm1::BoutonOuverturePortClick(TObject *Sender)
 {
-PortSerie Ouvrir;
-Ouvrir.ouvrirport();
+	Port->ouvrirport();
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::BoutonFermeturePortClick(TObject *Sender)
 {
-PortSerie Fermer;
-Fermer.fermerport();
+    Port->fermerport();
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::BoutonLecturePortClick(TObject *Sender)
 {
-PortSerie Lire;
-Lire.lireport();
+    Port->lireport();
 }
 //---------------------------------------------------------------------------
 
-
 void __fastcall TForm1::BoutonEcriturePortClick(TObject *Sender)
 {
-PortSerie Ecrire;
-Ecrire.EcrirePort();
+ 	Port->EcrirePort();
 }
 //---------------------------------------------------------------------------
 

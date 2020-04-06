@@ -4,7 +4,7 @@
 #pragma hdrstop
 #include <tchar.h>
 //---------------------------------------------------------------------------
-USEFORM("..\..\..\Desktop\TheatreDMX\TheatreDMX\C++\LILIAN\Ihm.cpp", Form1);
+USEFORM("Ihm.cpp", Form1);
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {

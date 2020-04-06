@@ -14,38 +14,38 @@ object Form1: TForm1
   PixelsPerInch = 96
   TextHeight = 13
   object BoutonOuverturePort: TButton
-    Left = 56
-    Top = 24
-    Width = 121
+    Left = 224
+    Top = 32
+    Width = 123
     Height = 25
-    Caption = 'Ouverture Port '
+    Caption = 'Ouverture Port'
     TabOrder = 0
     OnClick = BoutonOuverturePortClick
   end
   object BoutonFermeturePort: TButton
-    Left = 56
+    Left = 224
     Top = 72
-    Width = 121
+    Width = 123
     Height = 25
     Caption = 'Fermeture Port'
     TabOrder = 1
     OnClick = BoutonFermeturePortClick
   end
   object BoutonLecturePort: TButton
-    Left = 56
-    Top = 120
-    Width = 121
+    Left = 224
+    Top = 121
+    Width = 123
     Height = 25
     Caption = 'Lecture Port'
     TabOrder = 2
     OnClick = BoutonLecturePortClick
   end
   object BoutonEcriturePort: TButton
-    Left = 56
+    Left = 224
     Top = 168
-    Width = 121
+    Width = 123
     Height = 25
-    Caption = 'Ecriture port'
+    Caption = 'Ecriture Port'
     TabOrder = 3
     OnClick = BoutonEcriturePortClick
   end

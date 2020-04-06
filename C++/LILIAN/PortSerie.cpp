@@ -33,7 +33,7 @@ PortSerie::~PortSerie()  //destructeur
 //------------------------------------------------------------------------------------//
 void PortSerie::fermerport()   //Methode pour fermer le port
 {
-	CloseHandle(hCom); // fermeture du port série
+	CloseHandle(hCom); // fermeture du port sÈrie
 }
 
 //------------------------------------------------------------------------------------//
@@ -43,16 +43,16 @@ int PortSerie::ouvrirport()
 	DCB dcb;
 	BOOL fSuccess;
 	// pcComPort : Port com correspondant
-	char * pcCommPort = "COM1";
+	char * pcCommPort = "COM6";
 
 
    hCom = CreateFile( pcCommPort,   //nom du port
 					  GENERIC_READ | GENERIC_WRITE,  //lecture et ecriture
 					  0,      // pas de partage
-					  NULL,   //  Aucune sécurité
+					  NULL,   //  Aucune sÈcuritÈ
 					  OPEN_EXISTING, // ouvre le port existant uniquement
-					  0,      //  E/S non superposé
-					  NULL ); //  Null pour les periphérique de communnication
+					  0,      //  E/S non superposÈ
+					  NULL ); //  Null pour les periphÈrique de communnication
 
    if (hCom == INVALID_HANDLE_VALUE)
    {
@@ -60,11 +60,11 @@ int PortSerie::ouvrirport()
 	   return (1);
    }
 
-   //  Structure DCB (permet de controler :débit de bauds, nb de bit de démarrage/d'arrêt, format de données)
+   //  Structure DCB (permet de controler :dÈbit de bauds, nb de bit de dÈmarrage/d'arrÍt, format de donnÈes)
    SecureZeroMemory(&dcb, sizeof(DCB));
    dcb.DCBlength = sizeof(DCB);
 
-   // recupération des paramètres actuels du port
+   // recupÈration des paramËtres actuels du port
    fSuccess = GetCommState(hCom, &dcb);
 
    if (!fSuccess)
@@ -74,13 +74,13 @@ int PortSerie::ouvrirport()
 	  return (2);
    }
 
-   // On définit les valeurs (debit de bauds, taille des octets, nb de bits de démarage et d'arrêt)
+   // On dÈfinit les valeurs (debit de bauds, taille des octets, nb de bits de dÈmarage et d'arrÍt)
    dcb.BaudRate = CBR_9600;     //  baudRate = 9600
    dcb.ByteSize = 8;             //  ByteSize
-   dcb.Parity   = NOPARITY;      //  Parité = aucune
+   dcb.Parity   = NOPARITY;      //  ParitÈ = aucune
    dcb.StopBits = ONESTOPBIT;    //  stop bit
 
-   fSuccess = SetCommState(hCom, &dcb); // configuration du port série selon la structure DCB
+   fSuccess = SetCommState(hCom, &dcb); // configuration du port sÈrie selon la structure DCB
 
    if (!fSuccess)
    {
@@ -108,7 +108,7 @@ int PortSerie::ouvrirport()
 //------------------------------------------------------------------------------------//
 
 
-//Lecture du port série
+//Lecture du port sÈrie
 
 void PortSerie::lireport()
 {
@@ -138,7 +138,7 @@ void PortSerie::lireport()
 	} while (Vcontinue);
 }
 //------------------------------------------------------------------------------------//
-// recuperer la donnée du buffer
+// recuperer la donnÈe du buffer
 std::deque<char> & PortSerie::getRecvBuf()
 {
 	return recvBuf;
@@ -151,15 +151,16 @@ std::deque<char> & PortSerie::getRecvBuf()
 void PortSerie::EcrirePort()
 {
 
-char lpBuffer [] = "TEST ECRITURE";
-DWORD dNoOFBytestoWrite ; // Nombre d'octets à écrire dans le port
-DWORD dNoOfBytesWritten = 0; // Nombre d'octets écrits sur le port
+char lpBuffer [] = "A";
+DWORD dNoOFBytestoWrite ; // Nombre d'octets ‡ Ècrire dans le port
+DWORD dNoOfBytesWritten = 0; // Nombre d'octets Ècrits sur le port
 dNoOFBytestoWrite = sizeof ( lpBuffer ) ;
 
 bool Resultat = WriteFile ( hCom ,
-lpBuffer, // Données à écrire sur le port
-dNoOFBytestoWrite , // Nombre d'octets à écrire
-& dNoOfBytesWritten , // Octets écrits
+lpBuffer, // DonnÈes ‡ Ècrire sur le port
+dNoOFBytestoWrite , // Nombre d'octets ‡ Ècrire
+& dNoOfBytesWritten , // Octets Ècrits
 NULL ) ;
 }
+
 
