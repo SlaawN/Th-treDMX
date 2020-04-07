@@ -52,6 +52,7 @@ DWORD WINAPI TForm1::RecvThread(LPVOID params)
 
 		ReleaseMutex(form->sync);
 	}
+
 }
 __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner)
@@ -84,81 +85,77 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 		//MessageBox(NULL,"Echec","Connexion à BDD",0);
 	}
 	CloseServ->Visible=false;
-	EditCreaSeq->Visible=false;
-	LabelCreaSeq->Visible=false;
-	ButtonClasse->Visible=false;
+
 	MemoClasse->Visible=false;
 	ListBoxSeq->Visible=false;
-    LabelSeq->Visible=false;
+	LabelSeq->Visible=false;
+	LabelScene->Visible=false;
+	LabelAideNom->Visible=false;
+	EditNomScene->Visible=false;
+	EditNbSeq->Visible=false;
+	LabelNbSeq->Visible=false;
+	EditTpsPause->Visible=false;
+	LabelTpsPause->Visible=false;
+	EditDureeSeq->Visible=false;
+	LabelDureeSeq->Visible=false;
+	NbTrackBar =8;
+	NomScene ="";
+	ActiveTimerTrame = 0;
+	NbSeqActu=0;
+	ButtonValidSeq->Visible=false;
 }
 //---------------------------------------------------------------------------
 // Quand une des ScrollBars bouge
 void __fastcall TForm1::MyTrackBarChange(TObject *Sender)
 {
 	// envoie la position des scrollBars dans la variable de classe.
-	UnicodeString str = "Bar appelante ";
+	UnicodeString str = "ScrollBar ";
 	TScrollBar * obj = (TScrollBar*) Sender;
 	str += obj->Tag+1;
 	str += " valeur ";
 	int Position =255-obj->Position;
 	str += Position;
 	Label1->Caption = str;
-	Seq->setTrame(255-obj->Position, obj->Tag);
+	Seq[NbSeqActu]->setTrame(255-obj->Position, obj->Tag);
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::ButtonClasseClick(TObject *Sender)
 {
-	for (int i = 0; i < NbTrackBar; i++)
-	{
-		dmxBlock[i]=Seq->getTrame(i);
-		UnicodeString AjoutMemo="Paramètre ";
-		AjoutMemo+=i+1;
-		AjoutMemo+=" :";
-		AjoutMemo+=dmxBlock[i];
-		MemoClasse->Lines->Add(AjoutMemo);
-	}
+
 	ConnexionBDD->insert("INSERT INTO `Sequence` (`NbParametre`) VALUES (`NbTrackBar`)");
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::SendTrame()
 {
-	if(interface_open>0)
-	{
-
-		try{
-			DasUsbCommand(DHC_DMXOUT,DMX_MAXCHANNEL,dmxBlock);
-		}
-		catch(int x)
-		{
-		}
-	}
+//	if(interface_open>0)
+//	{
+//
+//		try{
+//			DasUsbCommand(DHC_DMXOUT,DMX_MAXCHANNEL,dmxBlock);
+//		}
+//		catch(int x)
+//		{
+//		}
+//	}
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::TimerSendTrameTimer(TObject *Sender)
 {
-	//NbTrackbar equivaut au nombre de channel du dmx
-	for (int i = 0; i < NbTrackBar; i++)
-	{
-		// recupere les données de la classe pour les mettre dans la trame
-		dmxBlock[i]=Seq->getTrame(i);
+	if (ActiveTimerTrame==0) {
+		//SendTrame();
 	}
-    // appel la fonction d'envoie de la trame au boitier
-	SendTrame();
-}
-//---------------------------------------------------------------------------
-void __fastcall TForm1::Creation1Click(TObject *Sender)
-{
-	EditCreaSeq->Visible=true;
-	LabelCreaSeq->Visible=true;
+	else{
+		strcpy(dmxBlock,Seq[NbSeqActu]->getTrameFull());
+		// appel la fonction d'envoie de la trame au boitier
+		//SendTrame();
+	}
+
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Modification1Click(TObject *Sender)
 {
-	EditCreaSeq->Visible=false;
-	LabelCreaSeq->Visible=false;
 	ListBoxSeq->Visible=true;
 	LabelSeq->Visible=true;
-	ButtonClasse->Visible=false;
 	MemoClasse->Visible=false;
 	Label1->Visible=False;
 	for(int i = 0 ; i < NbTrackBar; i++)
@@ -232,25 +229,119 @@ void __fastcall TForm1::CloseServClick(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::EditCreaSeqKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
 
+void __fastcall TForm1::Supression1Click(TObject *Sender)
 {
+	MemoClasse->Visible=false;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::CreationSceneClick(TObject *Sender)
+{
+		LabelScene->Top=27;
+		LabelScene->Visible=true;
+		EditNomScene->Visible=true;
+		LabelAideNom->Visible=true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::EditNomSceneKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
+{
+	NomScene ="Nom de la scene : ";
+	NomScene+=EditNomScene->Text;
+	LabelScene->Caption=NomScene;
 	if (Key==VK_RETURN) {
-		EditCreaSeq->Visible=false;
-		LabelCreaSeq->Visible=false;
-		ButtonClasse->Visible=true;
-		MemoClasse->Visible=true;
-		NbTrackBar=EditCreaSeq->Text.ToInt();
-		if (NbTrackBar>=8) {
-		   NbTrackBar=8;
+		LabelScene->Caption=NomScene;
+		if (LabelScene->Caption=="")
+		{
+
 		}
+		else
+		{
+			LabelScene->Caption=NomScene;
+			NomScene ="";
+			EditNomScene->Text ="";
+			LabelScene->Top=0;
+			LabelScene->Font->Size=15;
+			LabelScene->Left=120;
+			LabelScene->Visible=false;
+			LabelAideNom->Visible=false;
+			EditNomScene->Visible=false;
+			EditTpsPause->Visible=true;
+			LabelTpsPause->Visible=true;
+
+		}
+
+	}
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::EditNbSeqKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
+{
+	if (Key==VK_RETURN)
+	{
+		NbSeqMax=EditNbSeq->Text.ToInt();
+		if (LabelScene->Caption==""){
+		}
+		else{
+				for(int i = 0 ; i < NbTrackBar; i++)
+				{
+					ScrollB[i] = new TScrollBar(this);
+					ScrollB[i]->Parent = this;
+					ScrollB[i]->Max=255;
+					ScrollB[i]->Left = i * 50 + 30;
+					ScrollB[i]->Top = 120;
+					ScrollB[i]->Tag = i;
+					ScrollB[i]->Max = 255;
+					ScrollB[i]->Position = 255;
+					ScrollB[i]->Kind=sbVertical;
+					ScrollB[i]->OnChange = MyTrackBarChange;
+					edit[i] = new TEditHisto(this, ScrollB[i]);
+					edit[i]->Width=33;
+					edit[i]->Top=60;
+					edit[i]->Left = i * 50 + 25;
+					dmxBlock[i] = ScrollB[i]->Position;
+					Seq[NbSeqActu] = new Sequence(i,0);
+				}
+			UnicodeString IdSeq;
+			IdSeq="Id de la sequence : ";
+			IdSeq+=NbSeqActu+1;
+			LabelidSeq->Caption=IdSeq;
+			EditNbSeq->Visible=false;
+			LabelNbSeq->Visible=false;
+			LabelScene->Visible=true;
+			EditDureeSeq->Visible=true;
+			LabelDureeSeq->Visible=true;
+		}
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ButtonValidSeqClick(TObject *Sender)
+{
+	EditDureeSeq->Text="";
+	ButtonValidSeq->Visible=false;
+
+	for(int i = 0 ; i < NbTrackBar; i++)
+	{
+		ScrollB[i]->Free();
+		edit[i]->Free();
+	}
+	if (NbSeqActu<NbSeqMax)
+	{
+		Seq[NbSeqActu]->setTrameFull(dmxBlock);
+		ConnexionBDD->insert("INSERT INTO `Sequence` (`IdScene`,`IdSequence`,`Duree`,) VALUES (`1`,`NbSeqActu`,`DureeSeq`)");
+		NbSeqActu++;
+		UnicodeString IdSeq;
+		IdSeq="Id de la sequence : ";
+		IdSeq+=NbSeqActu+1;
+		LabelidSeq->Caption=IdSeq;
 		for(int i = 0 ; i < NbTrackBar; i++)
 		{
 			ScrollB[i] = new TScrollBar(this);
 			ScrollB[i]->Parent = this;
 			ScrollB[i]->Max=255;
 			ScrollB[i]->Left = i * 50 + 30;
-			ScrollB[i]->Top = 80;
+			ScrollB[i]->Top = 120;
 			ScrollB[i]->Tag = i;
 			ScrollB[i]->Max = 255;
 			ScrollB[i]->Position = 255;
@@ -258,19 +349,43 @@ void __fastcall TForm1::EditCreaSeqKeyDown(TObject *Sender, WORD &Key, TShiftSta
 			ScrollB[i]->OnChange = MyTrackBarChange;
 			edit[i] = new TEditHisto(this, ScrollB[i]);
 			edit[i]->Width=33;
-			edit[i]->Top=20;
+			edit[i]->Top=60;
 			edit[i]->Left = i * 50 + 25;
 			dmxBlock[i] = ScrollB[i]->Position;
-			Seq = new Sequence(i,0,dmxBlock[i]);
+			Seq[NbSeqActu] = new Sequence(NbSeqActu,0);
 		}
+	}
+	if (NbSeqActu==NbSeqMax) {
+		for(int i = 0 ; i < NbTrackBar; i++)
+		{
+			ScrollB[i]->Free();
+			edit[i]->Free();
+		}
+		MessageBox(NULL,"La scene est parametrer","Sah Quel plaisir",0);
 	}
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::Supression1Click(TObject *Sender)
+void __fastcall TForm1::EditTpsPauseKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
 {
-	ButtonClasse->Visible=false;
-	MemoClasse->Visible=false;
+	if (Key==VK_RETURN)
+	{
+		TpsPause=EditTpsPause->Text.ToInt();
+        EditNbSeq->Visible=true;
+		LabelNbSeq->Visible=true;
+        EditTpsPause->Visible=false;
+		LabelTpsPause->Visible=false;
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::EditDureeSeqKeyDown(TObject *Sender, WORD &Key, TShiftState Shift)
+{
+	if (Key==VK_RETURN)
+	{
+		DureeSeq=EditDureeSeq->Text.ToInt();
+		ButtonValidSeq->Visible=true;
+    }
 }
 //---------------------------------------------------------------------------
 
