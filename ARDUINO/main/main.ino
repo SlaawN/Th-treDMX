@@ -18,6 +18,7 @@ void loop()
   
   Capteurs capteur;
   Joystick joystick;
+  EcranLcd ecran;
 
   
   //capteur.LireValeur();
@@ -32,16 +33,16 @@ if(readStr.length() > 0)
 {
     int nbResult;
     char ** splited = ArduinoOtherFonctions::splitString(readStr.c_str(), ",", &nbResult);
-    
-  while(nbResult > -1)
-  {
-    Serial.println(splited[nbResult]);
-  }
-        
-    
-   
 
-    
+
+ 
+for(int i = 0; i < nbResult; i++)
+{       
+       Serial.println(splited[i]);
+       ecran.LCD(splited[i]);
 }
+        
+}
+
 
 }

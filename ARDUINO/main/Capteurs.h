@@ -13,6 +13,7 @@ int Val[NBValeurALire];
 
 
 public:
+
 int LireValeur(); 
 int SendValToSerial();
 
