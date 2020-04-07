@@ -8,27 +8,27 @@
 #include <stdio.h>
 #include <string.h>
 #include <sstream>
-#include <vcl.h>
-#include "Scene.h"
+//#include "TrameManager.h"
 //---------------------------------------------------------------------------
 
 class Sequence
 {
 	private:
-		int id;
-		int duree;
-		//trameManager* trame;
-		int nbSeqUsedEq;
-
-
+		int id,duree,NbSeqAdressEq;
+		//TrameManager* trame;
+		unsigned char trame[512];
 	public:
-	   //	Sequence(int id, int duree, trameManager*);
+		Sequence(int id, int duree, const char*);
 		Sequence(int id, int duree);
 		void setDuree(int duree);
 		void setId(int id);
-		//void setTrame(trameManager* trame);
+		void setTrame(unsigned char trame,int canal);
+		void setTrameFull(const char* trame);
 		int getDuree();
 		int getId();
+		unsigned char getTrame(int canal);
+        unsigned char* getTrameFull();
+
 
 };
 #endif
