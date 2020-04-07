@@ -1,14 +1,23 @@
+#include "Arduino.h"
+
+#define NBPinAnalog 8
+#define NBValeurALire 8
+
 class Capteurs
 {
+  
 private :
 
-int Analog[8];
-int adresse;
+char pin[NBPinAnalog] = {A0,A1,A2,A3,A4,A5,A6,A7}; 
+int Val[NBValeurALire]; 
+
 
 public:
-int LireValeur(int*tab);
+int LireValeur(); 
 int SendValToSerial();
-int Capteur(int adresse);
+
+
+
   
 
 };
